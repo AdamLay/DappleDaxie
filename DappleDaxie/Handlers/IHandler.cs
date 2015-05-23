@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DappleDaxie.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +8,6 @@ namespace DappleDaxie.Handlers
 {
   public interface IHandler
   {
-    void Process(HttpContext context);
+    CallResult Process(HttpContext context);
   }
 }

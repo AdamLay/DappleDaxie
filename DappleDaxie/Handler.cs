@@ -1,8 +1,10 @@
 ﻿using DappleDaxie.Handlers;
+using DappleDaxie.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace DappleDaxie
 {
@@ -36,13 +38,13 @@ namespace DappleDaxie
 
     public void ProcessRequest(HttpContext context)
     {
-      string name = context.Request.Form["Handler"];
-
-      string hName = "DappleDaxie." + name + "Handler";
+      string hName = "DappleDaxie.Handlers." + context.Request.Form["Handler"] + "Handler";
 
       IHandler handler = Handlers.First(m => m.GetType().FullName == hName);
 
-      handler.Process(context);
+      CallResult result = handler.Process(context);
+
+      context.Response.Write(result.ToJson());
     }
   }
 }
