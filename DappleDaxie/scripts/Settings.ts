@@ -1,0 +1,31 @@
+﻿class Settings
+{
+  private static GetValue<T>(property: string, session: boolean): T
+  {
+    var prop: string = "Settings." + property;
+    var obj = null;
+
+    if (Settings[prop])
+      obj = <T>Settings[prop];
+
+    if (session && sessionStorage[prop])
+      obj = sessionStorage[prop];
+
+    if (localStorage[prop])
+      obj = localStorage[prop];
+
+    return obj;
+  }
+
+  private static SetValue<T>(property: string, value: T, session: boolean): void
+  {
+    var prop: string = "Settings." + property;
+
+    Settings[prop] = value;
+
+    (session ? sessionStorage : localStorage)[prop] = JSON.stringify(value);
+  }
+
+  public static get AuthToken(): string { return Settings.GetValue<string>("AuthToken", true); }
+  public static set AuthToken(token: string) { Settings.SetValue("AuthToken", token, true); }
+}

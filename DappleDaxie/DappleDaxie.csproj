@@ -65,13 +65,16 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\login.html" />
     <Content Include="admin\index.html" />
     <Content Include="css\main.css" />
     <Content Include="images\bg2.jpg" />
+    <Content Include="images\bg_tile.png" />
     <Content Include="images\dapple_click.jpeg" />
     <Content Include="images\paw.svg" />
     <Content Include="site.html" />
     <Content Include="packages.config" />
+    <Content Include="admin\web.config" />
     <None Include="Properties\PublishProfiles\Live Publish %28Debug%29.pubxml" />
     <None Include="Properties\PublishProfiles\Live Publish.pubxml" />
     <None Include="Web.Debug.config">
@@ -101,8 +104,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="scripts\Admin.ts" />
+    <TypeScriptCompile Include="scripts\Data.ts" />
     <TypeScriptCompile Include="scripts\definitions\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\main.ts" />
+    <TypeScriptCompile Include="scripts\Settings.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -115,6 +121,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
+    <TypeScriptOutFile>scripts/app.js</TypeScriptOutFile>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
