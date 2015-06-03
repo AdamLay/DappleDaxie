@@ -8,8 +8,19 @@ namespace DappleDaxie.Data.Models
 {
   public class Parameter
   {
+    public Parameter(string name, DbType type, object value)
+    {
+      this.Name = name;
+      this.Type = type;
+      this.Value = value;
+    }
+    public Parameter()
+    {
+
+    }
+
     public string Name { get; set; }
-    public DbType type { get; set; }
+    public DbType Type { get; set; }
     public object Value { get; set; }
   }
 }

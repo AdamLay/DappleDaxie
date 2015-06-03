@@ -42,13 +42,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
-      <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -65,6 +62,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin\sql.html" />
     <Content Include="admin\login.html" />
     <Content Include="admin\index.html" />
     <Content Include="css\main.css" />
@@ -72,10 +70,10 @@
     <Content Include="images\bg_tile.png" />
     <Content Include="images\dapple_click.jpeg" />
     <Content Include="images\paw.svg" />
-    <Content Include="LICENSE.txt" />
+    <Content Include="scripts\app.js" />
     <Content Include="site.html" />
-    <Content Include="packages.config" />
     <Content Include="admin\web.config" />
+    <Content Include="DappleDaxieKey.snk" />
     <None Include="Properties\PublishProfiles\Live Publish %28Debug%29.pubxml" />
     <None Include="Properties\PublishProfiles\Live Publish.pubxml" />
     <None Include="Web.Debug.config">
@@ -92,12 +90,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\BCrypt.cs" />
     <Compile Include="Data\Data.cs" />
     <Compile Include="Data\Models\IBuildable.cs" />
     <Compile Include="Data\Models\Parameter.cs" />
+    <Compile Include="Data\Models\AuthToken.cs" />
     <Compile Include="Data\Models\User.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Handler.cs" />
+    <Compile Include="Handlers\ExecSqlHandler.cs" />
+    <Compile Include="Handlers\GetSqlHandler.cs" />
     <Compile Include="Handlers\HandlerBase.cs" />
     <Compile Include="Handlers\IHandler.cs" />
     <Compile Include="Handlers\AuthenticateHandler.cs" />
@@ -119,6 +121,12 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>DappleDaxieKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

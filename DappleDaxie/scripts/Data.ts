@@ -48,7 +48,15 @@ class Data
 
   public static Callback(json: string): void
   {
-    var msg: IResponse<any> = JSON.parse(json);
+    var msg: IResponse<any>;
+    try
+    {
+      msg = JSON.parse(json);
+    }
+    catch (ex)
+    {
+      console.error("Error parsing response from " + Data._lastCall.Handler, json);
+    }
 
     if (!msg.Success)
       Data.Error(msg.ErrorMessage);
@@ -80,5 +88,19 @@ class Data
         // Try again
       }
     });
+  }
+
+  public static GetSql()
+  {
+    var sql = $("#cmdGet").val();
+
+    Data.Call("GetSql", { Sql: sql },(msg: IResponse<any>) => { });
+  }
+
+  public static ExecSql()
+  {
+    var sql = $("#cmdExec").val();
+
+    Data.Call("ExecSql", { Sql: sql },(msg: IResponse<any>) => { });
   }
 }
