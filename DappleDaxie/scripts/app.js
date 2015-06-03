@@ -4,9 +4,9 @@ var Admin = (function () {
     Admin.Login = function () {
         var user = $("#txtUsername").val();
         var pass = $("#txtPassword").val();
-        if ($("#chkRemember").get(0).checked) {
-            Settings.Username = user;
-        }
+        var remember = $("#chkRemember").get(0).checked;
+        Settings.RememberMe = remember;
+        Settings.Username = user;
         Data.Authenticate(user, pass);
     };
     return Admin;
@@ -109,6 +109,16 @@ var Settings = (function () {
         },
         set: function (usr) {
             Settings.SetValue("Username", usr, false);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Settings, "RememberMe", {
+        get: function () {
+            return Settings.GetValue("RememberMe", false);
+        },
+        set: function (remember) {
+            Settings.SetValue("RememberMe", remember, false);
         },
         enumerable: true,
         configurable: true

@@ -50,8 +50,9 @@
 
     <script>
         $(document).ready(function () {
-            if (Settings.Username) {
+            if (Settings.RememberMe) {
                 $("#txtUsername").val(Settings.Username);
+                $("#chkRemember").get(0).checked = Settings.RememberMe;
             }
         });
     </script>

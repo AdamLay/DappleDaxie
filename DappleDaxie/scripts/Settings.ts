@@ -31,4 +31,7 @@
 
   public static get Username(): string { return Settings.GetValue<string>("Username", false); }
   public static set Username(usr: string) { Settings.SetValue<string>("Username", usr, false); }
+
+  public static get RememberMe(): boolean { return Settings.GetValue<boolean>("RememberMe", false); }
+  public static set RememberMe(remember: boolean) { Settings.SetValue<boolean>("RememberMe", remember, false); }
 }

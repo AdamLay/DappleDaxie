@@ -5,10 +5,11 @@
     var user = $("#txtUsername").val();
     var pass = $("#txtPassword").val();
 
-    if ((<any>$("#chkRemember").get(0)).checked)
-    {
-      Settings.Username = user;
-    }
+    var remember = (<any>$("#chkRemember").get(0)).checked;
+
+    Settings.RememberMe = remember;
+
+    Settings.Username = user;
 
     Data.Authenticate(user, pass);
   }
