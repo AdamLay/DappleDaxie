@@ -4,16 +4,17 @@ interface IRequest
 {
   Handler: string;
   Data: Object;
-  Callback: (msg: IResponse) => void;
+  Callback: (msg: IResponse<any>) => void;
 }
 
-interface IResponse
+interface IResponse<T>
 {
   Success: boolean;
-  ErrorMessage?: string
+  ErrorMessage?: string;
+  Result: T;
 }
 
-interface IAuthenticateResponse extends IResponse
+interface IAuthenticateResult
 {
   IsValid: boolean;
   AuthToken?: string;
@@ -21,15 +22,13 @@ interface IAuthenticateResponse extends IResponse
 
 //#endregion
 
-
-
 class Data
 {
   //#region Framework
 
   private static _lastCall: IRequest;
 
-  public static Call(handler: string, data: Object, callback: (msg: IResponse) => void): void
+  public static Call(handler: string, data: Object, callback: (msg: IResponse<any>) => void): void
   {
     Data._lastCall = {
       Handler: handler,
@@ -44,12 +43,12 @@ class Data
 
     console.log(Data._lastCall.Handler + " input: ", input);
 
-    $.post("handler.dap", input, Data.Callback);
+    $.post("/handler.dap", input, Data.Callback);
   }
 
   public static Callback(json: string): void
   {
-    var msg: IResponse = JSON.parse(json);
+    var msg: IResponse<any> = JSON.parse(json);
 
     if (!msg.Success)
       Data.Error(msg.ErrorMessage);
@@ -68,11 +67,11 @@ class Data
 
   public static Authenticate(username: string, password: string): void
   {
-    Data.Call("Authenticate", {},(msg: IAuthenticateResponse) =>
+    Data.Call("Authenticate", { Username: username, Password: password },(msg: IResponse<IAuthenticateResult>) =>
     {
-      if (msg.IsValid)
+      if (msg.Result.IsValid)
       {
-        Settings.AuthToken = msg.AuthToken;
+        Settings.AuthToken = msg.Result.AuthToken;
 
         window.location.replace("/admin/index.html");
       }

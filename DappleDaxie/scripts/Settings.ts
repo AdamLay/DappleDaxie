@@ -27,5 +27,8 @@
   }
 
   public static get AuthToken(): string { return Settings.GetValue<string>("AuthToken", true); }
-  public static set AuthToken(token: string) { Settings.SetValue("AuthToken", token, true); }
+  public static set AuthToken(token: string) { Settings.SetValue<string>("AuthToken", token, true); }
+
+  public static get Username(): string { return Settings.GetValue<string>("Username", false); }
+  public static set Username(usr: string) { Settings.SetValue<string>("Username", usr, false); }
 }

@@ -8,16 +8,67 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="/scripts/app.js"></script>
 
+    <style type="text/css">
+        body {
+            background-image: url(/images/bg_tile.png);
+        }
+
+        #loginBox {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            width: 300px;
+            margin-left: -150px;
+        }
+
+        #loginBox * {
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        #loginBox h1 {
+            margin: 0;
+            margin-bottom: 10px;
+            font-size: 1.6em;
+            font-family: "Segoe UI Light", Arial, sans-serif;
+            font-weight: 400;
+        }
+
+        #loginBox input[type=text],
+        #loginBox input[type=password],
+        #loginBox button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        #loginBox .checkbox-wrap {
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            if (Settings.Username) {
+                $("txtUsername").val(Settings.Username);
+            }
+        });
+    </script>
+
     <meta charset="utf-8" />
 </head>
 <body>
     <main>
 
         <div id="loginBox">
+            <h1>DappleDaxie Admin</h1>
             <input id="txtUsername" type="text" placeholder="Username" value="" />
             <br />
             <input id="txtPassword" type="password" placeholder="Password" value="" />
             <br />
+            <div class="checkbox-wrap">
+                <input type="checkbox" id="chkRemember" />
+                <label for="chkRemember">Remember Me</label>
+            </div>
             <button onclick="Admin.Login();">Login</button>
         </div>
 
