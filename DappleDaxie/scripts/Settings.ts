@@ -23,7 +23,7 @@
 
     Settings[prop] = value;
 
-    (session ? sessionStorage : localStorage)[prop] = JSON.stringify(value);
+    (session ? sessionStorage : localStorage)[prop] = (typeof (value) == "object" ? JSON.stringify(value) : value);
   }
 
   public static get AuthToken(): string { return Settings.GetValue<string>("AuthToken", true); }

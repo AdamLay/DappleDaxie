@@ -91,7 +91,7 @@ var Settings = (function () {
     Settings.SetValue = function (property, value, session) {
         var prop = "Settings." + property;
         Settings[prop] = value;
-        (session ? sessionStorage : localStorage)[prop] = JSON.stringify(value);
+        (session ? sessionStorage : localStorage)[prop] = (typeof (value) == "object" ? JSON.stringify(value) : value);
     };
     Object.defineProperty(Settings, "AuthToken", {
         get: function () {
