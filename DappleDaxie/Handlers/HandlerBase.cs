@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace DappleDaxie.Handlers
 {
@@ -13,6 +15,14 @@ namespace DappleDaxie.Handlers
     protected string GetInstagramApiUrl(string endpoint)
     {
       return "https://api.instagram.com/v1/" + endpoint + "?client_id=" + CLIENT_ID;
+    }
+
+    protected T GetInput<T>(HttpContext context = null)
+    {
+      if (context == null)
+        context = HttpContext.Current;
+
+      return new JavaScriptSerializer().Deserialize<T>(context.Request.Form["Data"]);
     }
   }
 }

@@ -41,10 +41,18 @@ namespace DappleDaxie
       string hName = "DappleDaxie.Handlers." + context.Request.Form["Handler"] + "Handler";
 
       IHandler handler = Handlers.First(m => m.GetType().FullName == hName);
+      
+      try
+      {
+        CallResult result = handler.Process(context);
 
-      CallResult result = handler.Process(context);
-
-      context.Response.Write(result.ToJson());
+        context.Response.Write(result.ToJson());
+      }
+      catch (Exception ex)
+      {
+        context.Response.Write("{ \"Success\": false, \"Message\":\"" + (ex.Message + " " + ex.StackTrace).Replace("\"", "\\\"") + "\" }");
+        context.Response.End();
+      }
     }
   }
 }
