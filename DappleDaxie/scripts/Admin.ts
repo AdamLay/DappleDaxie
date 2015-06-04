@@ -13,4 +13,14 @@
 
     Data.Authenticate(user, pass);
   }
+
+  public static Logout(): void
+  {
+    if (!Settings.RememberMe)
+      Settings.Username = "";
+
+    Settings.AuthToken = "";
+
+    window.location.replace("/admin/login.html");
+  }
 }

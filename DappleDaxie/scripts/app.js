@@ -9,6 +9,12 @@ var Admin = (function () {
         Settings.Username = user;
         Data.Authenticate(user, pass);
     };
+    Admin.Logout = function () {
+        if (!Settings.RememberMe)
+            Settings.Username = "";
+        Settings.AuthToken = "";
+        window.location.replace("/admin/login.html");
+    };
     return Admin;
 })();
 //#region Interfaces
@@ -16,7 +22,9 @@ var Admin = (function () {
 var Data = (function () {
     function Data() {
     }
-    Data.Call = function (handler, data, callback) {
+    Data.Call = function (handler, data, callback, hideLoading) {
+        if (!hideLoading)
+            Data.ShowLoading();
         Data._lastCall = {
             Handler: handler,
             Data: data,
@@ -31,19 +39,40 @@ var Data = (function () {
     };
     Data.Callback = function (json) {
         var msg;
+        var parseError = false;
         try {
             msg = JSON.parse(json);
         }
         catch (ex) {
+            msg = { Success: false, ErrorMessage: "Error parsing response from " + Data._lastCall.Handler, Result: null };
             console.error("Error parsing response from " + Data._lastCall.Handler, json);
+            parseError = true;
         }
         if (!msg.Success)
             Data.Error(msg.ErrorMessage);
+        if (parseError)
+            return;
         console.log(Data._lastCall.Handler + " response: ", msg);
         Data._lastCall.Callback(msg);
+        Data.RemoveLoading();
     };
     Data.Error = function (message) {
         console.error(Data._lastCall.Handler + ": " + message);
+        Data.RemoveLoading();
+    };
+    Data.ShowLoading = function () {
+        var loader = $("<div>", { "id": "divLoader" });
+        var loaderText = $("<div>", { "id": "divLoadingText", "text": "Loading..." });
+        var loaderWheel = $("<div>", { "id": "divLoadingWheel", "class": "icon" });
+        loader.append(loaderWheel);
+        loader.append(loaderText);
+        $("body").append(loader);
+        $("#divLoader").animate({ "top": "1em" });
+    };
+    Data.RemoveLoading = function () {
+        $("#divLoader").animate({ "top": "-60px" }, 500, function () {
+            $("#divLoader").remove();
+        });
     };
     //#endregion
     Data.Authenticate = function (username, password) {
@@ -115,7 +144,7 @@ var Settings = (function () {
     });
     Object.defineProperty(Settings, "RememberMe", {
         get: function () {
-            return Settings.GetValue("RememberMe", false);
+            return Settings.GetValue("RememberMe", false) === "true";
         },
         set: function (remember) {
             Settings.SetValue("RememberMe", remember, false);

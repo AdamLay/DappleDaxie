@@ -69,11 +69,18 @@
     <Content Include="images\bg2.jpg" />
     <Content Include="images\bg_tile.png" />
     <Content Include="images\dapple_click.jpeg" />
+    <Content Include="images\icons\error.svg" />
+    <Content Include="images\icons\info.svg" />
+    <Content Include="images\icons\logout.svg" />
+    <Content Include="images\icons\tick.svg" />
+    <Content Include="images\icons\warn.svg" />
+    <Content Include="images\icons\wheel.svg" />
     <Content Include="images\paw.svg" />
     <Content Include="scripts\app.js" />
     <Content Include="site.html" />
     <Content Include="admin\web.config" />
     <Content Include="DappleDaxieKey.snk" />
+    <Content Include="css\admin.css" />
     <None Include="Properties\PublishProfiles\Live Publish %28Debug%29.pubxml" />
     <None Include="Properties\PublishProfiles\Live Publish.pubxml" />
     <None Include="Web.Debug.config">
@@ -140,7 +147,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>5384</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

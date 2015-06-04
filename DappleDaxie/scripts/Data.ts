@@ -28,8 +28,11 @@ class Data
 
   private static _lastCall: IRequest;
 
-  public static Call(handler: string, data: Object, callback: (msg: IResponse<any>) => void): void
+  public static Call(handler: string, data: Object, callback: (msg: IResponse<any>) => void, hideLoading?: boolean): void
   {
+    if (!hideLoading)
+      Data.ShowLoading();
+
     Data._lastCall = {
       Handler: handler,
       Data: data,
@@ -49,26 +52,61 @@ class Data
   public static Callback(json: string): void
   {
     var msg: IResponse<any>;
+    var parseError = false;
+
     try
     {
       msg = JSON.parse(json);
     }
     catch (ex)
     {
+      msg = { Success: false, ErrorMessage: "Error parsing response from " + Data._lastCall.Handler, Result: null };
+
       console.error("Error parsing response from " + Data._lastCall.Handler, json);
+
+      parseError = true;
     }
 
     if (!msg.Success)
       Data.Error(msg.ErrorMessage);
 
+    if (parseError)
+      return;
+
     console.log(Data._lastCall.Handler + " response: ", msg);
 
     Data._lastCall.Callback(msg);
+
+    Data.RemoveLoading();
   }
 
   public static Error(message: string)
   {
     console.error(Data._lastCall.Handler + ": " + message);
+
+    Data.RemoveLoading();
+  }
+
+  public static ShowLoading(): void
+  {
+    var loader = $("<div>", { "id": "divLoader" });
+    var loaderText = $("<div>", { "id": "divLoadingText", "text": "Loading..." });
+    var loaderWheel = $("<div>", { "id": "divLoadingWheel", "class": "icon" });
+
+    loader.append(loaderWheel);
+    loader.append(loaderText);
+
+    $("body").append(loader);
+
+    $("#divLoader").animate({ "top": "1em" });
+  }
+
+  public static RemoveLoading(): void
+  {
+    $("#divLoader").animate({ "top": "-60px" }, 500, function ()
+    {
+      $("#divLoader").remove();
+    });
   }
 
   //#endregion
